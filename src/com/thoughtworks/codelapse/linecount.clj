@@ -7,4 +7,4 @@
 
 (defn parse-cloc-line [line]
   (let [values (split line ",")]
-    (struct cloc-record (second values) (nth values 4) (nth values 3))))
+    (struct-map cloc-record :language (second values) :lines (nth values 4) :comment-lines (nth values 3))))
