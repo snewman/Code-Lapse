@@ -2,6 +2,7 @@
   <library name="clojure-1.1.0">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/clojure.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/clojure-contrib.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
