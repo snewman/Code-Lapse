@@ -6,9 +6,19 @@
 10,Bourne Shell,56,155,252,3.81,960.12
 2,Python,28,0,112,4.2,470.4")
 
-(deftest test-parsing-cloc-line
+(deftest test-parsing-language-from-line
   (is (=
     "Bourne Shell"
     (:language (parse-cloc-line "10,Bourne Shell,56,155,252,3.81,960.12")))))
+
+(deftest test-parsing-lines-of-code-from-line
+  (is (=
+    "252"
+    (:lines (parse-cloc-line "10,Bourne Shell,56,155,252,3.81,960.12")))))
+
+(deftest test-parsing-lines-of-comment-from-line
+  (is (=
+    "155"
+    (:comment-lines (parse-cloc-line "10,Bourne Shell,56,155,252,3.81,960.12")))))
 
 (run-tests 'com.thoughtworks.codelapse.linecount-tests)
