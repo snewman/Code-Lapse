@@ -38,4 +38,9 @@
     (second (parse-cloc multi-line-cloc-output))
     {:language "Python" :lines "112" :comment-lines "0"} )))
 
+(deftest test-extracting-represented-languages
+  (is (=
+    (languages '({:language "Bourne Shell"} {:language "Python"}))
+    '("Bourne Shell" "Python"))))
+
 (run-tests 'com.thoughtworks.codelapse.linecount-tests)

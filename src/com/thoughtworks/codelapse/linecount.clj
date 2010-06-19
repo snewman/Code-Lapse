@@ -14,3 +14,8 @@
 
 (defn parse-cloc [cloc-output]
   (map parse-cloc-line (next (split-lines cloc-output))))
+
+(defn languages
+  "Takes a list of maps (cloc records) and returns a set which languages are represented"
+  [list-cloc-records]
+  (map :language list-cloc-records))
