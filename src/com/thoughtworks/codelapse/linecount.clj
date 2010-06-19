@@ -1,12 +1,7 @@
-(ns com.thoughtworks.codelapse.linecount)
+(ns com.thoughtworks.codelapse.linecount
+  (:use com.thoughtworks.codelapse.utils))
 
 (defstruct cloc-record :language :lines :comment-lines)
-
-(defn split [str delimiter]
-  (seq (.split str delimiter)))
-
-(defn split-lines [str]
-  (seq (.split #"\r?\n" str)))
 
 (defn parse-cloc-line [line]
   (let [values (split line ",")]
