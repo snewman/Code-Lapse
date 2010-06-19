@@ -1,7 +1,9 @@
 (ns com.thoughtworks.codelapse.git
   (:import
-    [org.eclipse.jgit.lib Repository]))
+    [com.thoughtworks.codelapse Executor]))
 
-(defn list-repo
-  [location]
-  (doto (new Repository location) .getRepositoryState ))
+;'git --git-dir=' + self.git_dir + ' log --format=format:"%H" -1'
+
+(defn current-head
+  [git-executor]
+  (git-executor (str "log --format=format:'%H' -1")))
