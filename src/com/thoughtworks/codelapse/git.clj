@@ -14,4 +14,4 @@
   (git-executor (str "reset --hard " commit-hash)))
 
 (defn git-executable [git-executable git-directory working-directory]
-  (partial execute git-executable "--git-dir=" git-directory "--work-tree" working-directory))
+  (partial execute git-executable "--git-dir=" git-directory "--work-tree=" working-directory))
