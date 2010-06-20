@@ -13,5 +13,12 @@
   [git-executor commit-hash]
   (git-executor (str "reset --hard " commit-hash)))
 
-(defn git-executable [git-executable git-directory working-directory]
-  (partial execute git-executable "--git-dir=" git-directory "--work-tree=" working-directory))
+(defn git-executable
+  "Constructs a partial function capable of running git commands (using the command-line process)
+  using the given executable, working directory, and git location.
+  e.g. (quotes swapped):
+  user=> (def git (git-executable '/opt/local/bin/git' '/Users/admin/Development/codelapse/.git' '/Users/admin/Development/codelapse'))
+  #'user/git
+  user=> (git 'log')"
+  [git-executable git-directory working-directory]
+  (partial execute git-executable (str "--git-dir=" git-directory) (str "--work-tree=" working-directory)))
