@@ -1,9 +1,5 @@
 (ns com.thoughtworks.codelapse.git
-  (:use com.thoughtworks.codelapse.utils)
-  (:import
-    [com.thoughtworks.codelapse Executor]))
-
-;'git --git-dir=' + self.git_dir + ' log --format=format:"%H" -1'
+  (:use com.thoughtworks.codelapse.utils))
 
 (defn current-head
   [git-executor]
