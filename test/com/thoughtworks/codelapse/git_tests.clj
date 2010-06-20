@@ -15,4 +15,10 @@
       (list-all-commits mock-executor)
       '(("Commit1" "Date1")("Commit2" "Date2"))))))
 
+(deftest should-execute-hard-reset
+  (let [mock-executor (fn [args] (is (= args "reset --hard somehash")))]
+    (is (=
+      (hard-reset mock-executor "somehash")
+      true))))
+
 (run-tests 'com.thoughtworks.codelapse.git-tests)

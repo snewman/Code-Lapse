@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 
 public class Executor {
 
-    public static String execute(String command) {
+    public static String execute(String[] command) {
         try {
             Process process = Runtime.getRuntime().exec(command);
             String errorString = streamToString(process.getErrorStream());
@@ -39,6 +39,5 @@ public class Executor {
         }
         return output.toString();
     }
-
 
 }
