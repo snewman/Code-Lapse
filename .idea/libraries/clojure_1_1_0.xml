@@ -4,6 +4,7 @@
       <root url="jar://$PROJECT_DIR$/lib/clojure.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/clojure-contrib-1.2.0-20100615.150419-128.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/commons-exec-1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/midje-7f9dcac01f15fa88fcc1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
