@@ -1,11 +1,7 @@
 (ns com.thoughtworks.codelapse.codelapse
-  (:use com.thoughtworks.codelapse.linecount midje.semi-sweet clojure.test clojure.contrib.io)
+  (:use com.thoughtworks.codelapse.utils midje.semi-sweet clojure.test clojure.contrib.io)
   (:import
     (java.io File)))
-
-(declare cloc)
-
-
 
 (defn class-header
   [classname]
@@ -25,6 +21,24 @@
   (str (class-header classname) method-header (lines-of-java lines-of-code) footer))
 
 (defn create-java-file
-  [directory name lines-of-code]
-  (let [new-java-file (new File directory (str name ".java"))]
-  (spit new-java-file (java-class name lines-of-code))))
+  [directory-name class-name lines-of-code]
+  (let [new-java-file (file-str directory-name File/separatorChar class-name)]
+    (do
+      (spit new-java-file (java-class class-name lines-of-code))
+      new-java-file)))
+
+(defn make-temp-dir []
+  "Creates a temporary directory that will be cleaned up when the JVM exits"
+  (let [temp-file  (File/createTempFile "temp" (Long/toString (System/currentTimeMillis)))]
+    (do
+      (delete-file temp-file)
+      (if (.mkdir temp-file)
+        (.getAbsolutePath temp-file)
+        (throw (java.io.IOException (str "Could not create directory " (.getAbsolutePath temp-file))))))))
+
+(deftest test-can-create-fake-files
+  (let [java-file (.getAbsolutePath (create-java-file (make-temp-dir) "Bob" 1))]
+    (expect (slurp java-file) => "public static class Bob {\npublic static void main(String[] args) {\nSystem.currentTimeMillis();\n}\n}\n")))
+
+
+(run-tests 'com.thoughtworks.codelapse.codelapse)
