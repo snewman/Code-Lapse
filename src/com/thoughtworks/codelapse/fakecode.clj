@@ -1,4 +1,4 @@
-(ns com.thoughtworks.codelapse.codelapse
+(ns com.thoughtworks.codelapse.fakecode
   (:use com.thoughtworks.codelapse.utils midje.semi-sweet clojure.test clojure.contrib.io)
   (:import
     (java.io File)))
@@ -22,6 +22,9 @@
 
 (defn create-java-file
   [directory-name class-name lines-of-code]
+  "Creates a java file with the given number of lines of code + 4 (to account for header/footer code
+  TODO: ACtually do what it says - so fail if we ask for less than 4 lines of code, but take the header & footer
+  into account in lines of code terms"
   (let [new-java-file (file-str directory-name File/separatorChar class-name)]
     (do
       (spit new-java-file (java-class class-name lines-of-code))
@@ -41,4 +44,4 @@
     (expect (slurp java-file) => "public static class Bob {\npublic static void main(String[] args) {\nSystem.currentTimeMillis();\n}\n}\n")))
 
 
-(run-tests 'com.thoughtworks.codelapse.codelapse)
+(run-tests 'com.thoughtworks.codelapse.fakecode)
