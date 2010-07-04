@@ -30,24 +30,18 @@
     (expect (cloc temp-dir) => '({:language "Java" :lines "9" :comment-lines "0"}))))
 
 (deftest test-extracting-represented-languages
-  (is (=
-    (languages '({:language "Bourne Shell"} {:language "Python"}))
-    '("Bourne Shell" "Python"))))
-
+  (expect (languages '({:language "Bourne Shell"} {:language "Python"})) => '("Bourne Shell" "Python")))
+ 
 (deftest test-parsing-language-from-line
-  (is (=
-    "Bourne Shell"
-    (:language (parse-cloc-line "10,Bourne Shell,56,155,252,3.81,960.12")))))
+  (expect (:language (parse-cloc-line "10,Bourne Shell,56,155,252,3.81,960.12")) => "Bourne Shell"))
 
 (deftest test-parsing-lines-of-code-from-line
-  (is (=
-    "252"
-    (:lines (parse-cloc-line "10,Bourne Shell,56,155,252,3.81,960.12")))))
+  (expect
+    (:lines (parse-cloc-line "10,Bourne Shell,56,155,252,3.81,960.12")) => "252"))
 
 (deftest test-parsing-lines-of-comment-from-line
-  (is (=
-    "155"
-    (:comment-lines (parse-cloc-line "10,Bourne Shell,56,155,252,3.81,960.12")))))
+  (expect
+    (:comment-lines (parse-cloc-line "10,Bourne Shell,56,155,252,3.81,960.12")) => "155"))
 
 (def multi-line-cloc-output
   "      1 text file.
