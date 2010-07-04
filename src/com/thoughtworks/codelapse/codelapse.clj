@@ -1,12 +1,11 @@
 (ns com.thoughtworks.codelapse.codelapse
-  (:use com.thoughtworks.codelapse.linecount midje.semi-sweet clojure.test))
+  (:use com.thoughtworks.codelapse.linecount midje.semi-sweet clojure.test clojure.contrib.io)
+  (:import
+    (java.io File)))
 
 (declare cloc)
 
 
-; Whe run on some (known) directory create an expected output
-(deftest analysis-of-single-commit
-  (expect))
 
 (defn class-header
   [classname]
@@ -19,10 +18,13 @@
 
 (defn lines-of-java
   [number]
-  (apply str (take number (repeat "System.currentTimeMillis();"))))
+  (apply str (take number (repeat "System.currentTimeMillis();\n"))))
 
-(defn java-file
+(defn java-class
   [classname lines-of-code]
-  (str (class-header "Bob") method-header (lines-of-java lines-of-code)) footer)
+  (str (class-header classname) method-header (lines-of-java lines-of-code) footer))
 
-(use-fixtures :each with-example-code-directory)
+(defn create-java-file
+  [directory name lines-of-code]
+  (let [new-java-file (new File directory (str name ".java"))]
+  (spit new-java-file (java-class name lines-of-code))))
