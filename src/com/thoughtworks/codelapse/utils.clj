@@ -1,7 +1,7 @@
 (ns com.thoughtworks.codelapse.utils
-  (:use clojure.contrib.duck-streams)
+  (:use clojure.contrib.duck-streams  [clojure.contrib.io :only (delete-file)])
   (:import
-    (java.io IOException ByteArrayOutputStream)
+    (java.io IOException ByteArrayOutputStream File)
     (java.lang RuntimeException)
     (org.apache.commons.exec CommandLine DefaultExecutor ExecuteWatchdog PumpStreamHandler ExecuteException)))
 
@@ -35,3 +35,12 @@
        (.toString error-stream))
       (catch Exception e (throw (new RuntimeException (str "Error: " (.getMessage e) " Output:" (.toString error-stream)) e))))))
 
+;
+(defn make-temp-dir []
+  "Creates a temporary directory that will be cleaned up when the JVM exits"
+  (let [temp-file  (File/createTempFile "temp" (Long/toString (System/currentTimeMillis)))]
+    (do
+      (delete-file temp-file)
+      (if (.mkdir temp-file)
+        (.getAbsolutePath temp-file)
+        (throw (java.io.IOException (str "Could not create directory " (.getAbsolutePath temp-file))))))))
