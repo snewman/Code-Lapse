@@ -8,12 +8,21 @@
 (deftest analysis-of-single-commit
   (expect))
 
+(defn class-header
+  [classname]
+  (str "public static class " classname " {\n"))
 
-(defn with-example-code-directory
-  [test]
-  ()
-  (test)
-  ()
- )
+(def method-header
+  "public static void main(String[] args) {\n")
+
+(def footer "}\n}\n")
+
+(defn lines-of-java
+  [number]
+  (apply str (take number (repeat "System.currentTimeMillis();"))))
+
+(defn java-file
+  [classname lines-of-code]
+  (str (class-header "Bob") method-header (lines-of-java lines-of-code)) footer)
 
 (use-fixtures :each with-example-code-directory)
