@@ -1,4 +1,4 @@
-(ns com.thoughtworks.codelapse.linecount
+(ns com.thoughtworks.codelapse.cloc
   (:use com.thoughtworks.codelapse.utils com.thoughtworks.codelapse.fakecode clojure.test midje.semi-sweet))
 
 (defstruct cloc-record :language :lines :comment-lines)
@@ -57,4 +57,4 @@
     (expect (first output) => {:language "Bourne Shell" :lines "252" :comment-lines "155"})
     (expect (second output) => {:language "Python" :lines "112" :comment-lines "0"})))
 
-(run-tests 'com.thoughtworks.codelapse.linecount)
+(run-tests 'com.thoughtworks.codelapse.cloc)
