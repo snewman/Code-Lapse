@@ -26,7 +26,7 @@
 
 (deftest can-report-on-lines-of-one-file
   (let [temp-dir (make-temp-dir)
-        java-file (create-java-file temp-dir "Bob.java" 5)]
+        java-file (create-java-file temp-dir "Bob.java" 9)]
     (expect (cloc temp-dir) => '({:language "Java" :lines "9" :comment-lines "0"}))))
 
 (deftest test-extracting-represented-languages

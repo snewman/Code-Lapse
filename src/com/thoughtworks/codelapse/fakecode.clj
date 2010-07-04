@@ -18,13 +18,16 @@
 
 (defn java-class
   [classname lines-of-code]
-  (str (class-header classname) method-header (lines-of-java lines-of-code) footer))
+  "Creates a named class with the given number of lines of code. Note that due to class and
+  method declarations 4 is the minimum length"
+  (if (< lines-of-code 4)
+    (throw (new RuntimeException "Java source file has to be at least 4 lines long"))
+    (str (class-header classname) method-header (lines-of-java (- lines-of-code 4)) footer)))
 
 (defn create-java-file
   [directory-name class-name lines-of-code]
-  "Creates a java file with the given number of lines of code + 4 (to account for header/footer code
-  TODO: ACtually do what it says - so fail if we ask for less than 4 lines of code, but take the header & footer
-  into account in lines of code terms"
+  "Creates a java file with the given number of lines of code. Note that due to class and
+   method declarations 4 is the minimum length"
   (let [new-java-file (file-str directory-name File/separatorChar class-name)]
     (do
       (spit new-java-file (java-class class-name lines-of-code))
@@ -40,7 +43,7 @@
         (throw (java.io.IOException (str "Could not create directory " (.getAbsolutePath temp-file))))))))
 
 (deftest test-can-create-fake-files
-  (let [java-file (.getAbsolutePath (create-java-file (make-temp-dir) "Bob" 1))]
+  (let [java-file (.getAbsolutePath (create-java-file (make-temp-dir) "Bob" 5))]
     (expect (slurp java-file) => "public static class Bob {\npublic static void main(String[] args) {\nSystem.currentTimeMillis();\n}\n}\n")))
 
 
