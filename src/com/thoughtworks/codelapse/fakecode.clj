@@ -33,15 +33,6 @@
       (spit new-java-file (java-class class-name lines-of-code))
       new-java-file)))
 
-(defn make-temp-dir []
-  "Creates a temporary directory that will be cleaned up when the JVM exits"
-  (let [temp-file  (File/createTempFile "temp" (Long/toString (System/currentTimeMillis)))]
-    (do
-      (delete-file temp-file)
-      (if (.mkdir temp-file)
-        (.getAbsolutePath temp-file)
-        (throw (java.io.IOException (str "Could not create directory " (.getAbsolutePath temp-file))))))))
-
 (deftest test-can-create-fake-files
   (let [java-file (.getAbsolutePath (create-java-file (make-temp-dir) "Bob" 5))]
     (expect (slurp java-file) => "public static class Bob {\npublic static void main(String[] args) {\nSystem.currentTimeMillis();\n}\n}\n")))
