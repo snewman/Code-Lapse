@@ -1,5 +1,11 @@
 (ns com.thoughtworks.codelapse.codelapse
-  (:use com.thoughtworks.codelapse.git com.thoughtworks.codelapse.utils com.thoughtworks.codelapse.cloc midje.semi-sweet clojure.test))
+  (:use
+    com.thoughtworks.codelapse.git
+    com.thoughtworks.codelapse.utils
+    com.thoughtworks.codelapse.cloc
+    midje.semi-sweet
+    clojure.test
+    clojure.contrib.str-utils))
 
 (defn cloc-for-head
   [git-repo working-dir commit]
@@ -22,7 +28,7 @@
 
 (defn header-row
   [records]
-  (str "Date," (apply str (interpose "," (as-columns records)))))
+  (str "Date," (str-join "," (as-columns records))))
 
 (defn values-for-record
   [columns values]
@@ -32,15 +38,13 @@
   [record columns]
   (let [day (first record)
         values (second record)]
-   (str day ","
-    (apply str (interpose "," (values-for-record columns values))))))
+   (str day "," (str-join "," (values-for-record columns values)))))
 
 (defn as-data
   [records]
-  (apply str
-    (interpose "\n"
+  (str-join "\n"
       (for [record records]
-          (as-row record (as-columns records))))))
+          (as-row record (as-columns records)))))
 
 (defn as-table
   [records]

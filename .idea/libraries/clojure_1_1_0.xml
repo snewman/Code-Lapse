@@ -28,7 +28,6 @@
       <root url="jar://$PROJECT_DIR$/lib/incanter-io-1.2.3-SNAPSHOT.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/incanter-mongodb-1.2.3-SNAPSHOT.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/incanter-pdf-1.2.3-SNAPSHOT.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/clojure.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/incanter-processing-1.2.3-SNAPSHOT.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/itext-1.4.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jcommon-1.0.16.jar!/" />
