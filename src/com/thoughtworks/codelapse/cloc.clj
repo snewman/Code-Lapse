@@ -57,4 +57,4 @@
     (expect (first output) => {:language "Bourne Shell" :lines "252" :comment-lines "155"})
     (expect (second output) => {:language "Python" :lines "112" :comment-lines "0"})))
 
-(run-tests 'com.thoughtworks.codelapse.cloc)
+;(run-tests 'com.thoughtworks.codelapse.cloc)

@@ -46,4 +46,4 @@
 ;  (let [mock-executor (fn [args] (is (= args "clone git://somerepo.git /dir/for/repo")))]
 ;    (expect (clone mock-executor "git://somerepo.git" "/dir/for/repo") => true)))
 
-(run-tests 'com.thoughtworks.codelapse.git)
+;(run-tests 'com.thoughtworks.codelapse.git)

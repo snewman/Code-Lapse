@@ -1,5 +1,5 @@
 (ns com.thoughtworks.codelapse.codelapse
-  (:use com.thoughtworks.codelapse.git com.thoughtworks.codelapse.utils com.thoughtworks.codelapse.cloc))
+  (:use com.thoughtworks.codelapse.git com.thoughtworks.codelapse.utils com.thoughtworks.codelapse.cloc midje.semi-sweet clojure.test))
 
 (defn cloc-for-head
   [git-repo working-dir commit]
@@ -44,7 +44,26 @@
 
 (defn as-table
   [records]
+  "Converts Clojure data in the form:
+  ((\"ID1\" {:a 1 :b 2 :c 3})
+  (\"ID1\" { :b 2 :c 3}))
+  To sparse tablular Data"
     (apply str (header-row records) "\n" (as-data records)))
 
-(end-to-end-git)
+(deftest should-extract-known-columns-from-records
+  (expect (as-columns '(("ID1" {"a" 1 "b" 2}))) => #{"a" "b"})
+  (expect (as-columns '(("ID1" {"a" 1 "b" 2}) ("ID2" {"b" 1 "c" 2}))) => #{"a" "b" "c"}))
+
+(deftest should-create-header-row
+  (expect (header-row '(("ID" {"a" 1 "b" 2}))) => "Date,a,b"))
+
+(deftest should-create-dense-table-from-records
+  (expect (as-table '(("ID1" {"a" 1 "b" 2}))) => "Date,a,b\nID1,1,2")
+  (expect (as-table '(("ID1" {"a" 1 "b" 2}) ("ID2" {"a" 3 "b" 5}))) => "Date,a,b\nID1,1,2\nID2,3,5"))
+
+(deftest should-create-sparse-table-from-records
+  (expect (as-table '(("ID1" {"b" 1 "c" 2}) ("ID2" {"a" 3 "b" 5}))) => "Date,a,b,c\nID1,-,1,2\nID2,3,5,-"))
+
+(run-tests 'com.thoughtworks.codelapse.codelapse)
+; (end-to-end-git)
 

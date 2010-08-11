@@ -38,4 +38,4 @@
     (expect (slurp java-file) => "public static class Bob {\npublic static void main(String[] args) {\nSystem.currentTimeMillis();\n}\n}\n")))
 
 
-(run-tests 'com.thoughtworks.codelapse.fakecode)
+;(run-tests 'com.thoughtworks.codelapse.fakecode)
